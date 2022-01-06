@@ -24,13 +24,6 @@ func newDeck() deck {
 	return cards
 }
 
-// deal a hand of size x from a deck
-func deal(d deck, handsize int) (deck, deck) {
-	hand := d[:handsize]
-	remainingDeck := d[handsize:]
-	return hand, remainingDeck
-}
-
 // function to print out each card in the deck
 /*
 	(d deck) is a "receiver" which allows every
@@ -45,4 +38,10 @@ func (d deck) print() {
 	for i, card := range d {
 		fmt.Println(i, card)
 	}
+}
+
+// deal a hand of size x from a deck
+// return hand and deck remaining
+func deal(d deck, handsize int) (deck, deck) {
+	return d[:handsize], d[handsize:]
 }
