@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"strings"
 )
 
@@ -14,7 +13,7 @@ type deck []string
 func newDeck() deck {
 	cards := deck{}
 	cardSuits := []string{"Clubs", "Diamonds", "Hearts", "Spades"}
-	cardValues := []string{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"}
+	cardValues := []string{"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"}
 
 	/*
 		When we have a variable that we don't need to use
@@ -52,19 +51,11 @@ func deal(d deck, handsize int) (deck, deck) {
 }
 
 // save to file
-func saveToFile(b []byte) {
-	err := ioutil.WriteFile("hand", b, 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
+func (d deck) saveToFile(filename string) error {
+	return ioutil.WriteFile(filename, []byte(d.toString()), 0644)
 }
 
 // write deck to string
 func (d deck) toString() string {
 	return strings.Join([]string(d), ", ")
-}
-
-// string to []byte
-func toBytes(s string) []byte {
-	return []byte(s)
 }
