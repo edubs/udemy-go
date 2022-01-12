@@ -1,13 +1,14 @@
 package main
 
 import (
+	crypto_rand "crypto/rand"
+	"encoding/binary"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"math/rand"
 	"os"
 	"strings"
-	"time"
 )
 
 // Create a new type of 'deck' which is a slice of strings
@@ -21,7 +22,7 @@ func newDeck() deck {
 
 	/*
 		When we have a variable that we don't need to use
-		you can use the underscore to indicate that the go
+		you can use the _ underscore to indicate that the go
 		compiler ignore the warning.
 	*/
 	for _, suit := range cardSuits {
@@ -79,9 +80,25 @@ func readFromFile(filename string) deck {
 
 // shuffle deck
 func (d deck) shuffle() {
-	rand.Seed(time.Now().UnixNano())
+	// time based seed
+	// rand.Seed(time.Now().UnixNano())
+
+	/*
+		notes: you should no reseed the random num generator between iterations
+		set it once in init or in the function and let it be. the crypto seed
+		method below is more secure / reliable than using time.
+	*/
+	// crypto based seed
+	var b [8]byte
+	_, err := crypto_rand.Read(b[:])
+	if err != nil {
+		panic("cannot seed math/rand package with crytpo secure random num")
+	}
+	rand.Seed(int64(binary.LittleEndian.Uint64(b[:])))
+
 	for i := range d {
 		randomNumber := rand.Intn(len(d) - 1)
+		// long swap method
 		/*
 			for i, card := range d {
 				randCard := d[randomNumber]
