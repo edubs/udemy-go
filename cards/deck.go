@@ -96,6 +96,8 @@ func (d deck) shuffle() {
 	}
 	rand.Seed(int64(binary.LittleEndian.Uint64(b[:])))
 
+	// get a random index position and swap the values
+	// with the current index from loop iteration
 	for i := range d {
 		randomNumber := rand.Intn(len(d) - 1)
 		// long swap method
