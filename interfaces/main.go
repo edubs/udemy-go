@@ -2,10 +2,15 @@ package main
 
 import "fmt"
 
+// interface 'type'
+// can't create a value directly out of this type
+// these are not 'generic types'
 type bot interface {
 	getGreeting() string
 }
 
+// concrete 'type'
+// can create a value directly out of this type
 type englishBot struct {
 }
 
