@@ -1,0 +1,4 @@
+This is a text file.
+It contains some text to read in from a file.
+
+This should print to the command line.
